@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		AB236BB1223B797500899722 /* grand_piano */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = grand_piano; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB236BB4223B797500899722 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		AB308F1022458EF700B0F61E /* wav.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = wav.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				AB236BB4223B797500899722 /* main.cpp */,
+				AB308F1022458EF700B0F61E /* wav.hpp */,
 			);
 			path = grand_piano;
 			sourceTree = "<group>";
