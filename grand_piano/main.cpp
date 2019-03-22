@@ -24,25 +24,18 @@ int main() {
     
     // gets instrument preset
     std::string instrument;
-    std::cout << "(Options: trumpet, toypiano, sine)" << std::endl;
+    std::cout << "(Options: trumpet, toypiano, sine [default])" << std::endl;
     std::cout << "Instrument preset: ";
     std::cin >> instrument;
-    if (instrument != "toypiano" && instrument != "trumpet" && instrument != "sine") {
-        std::cout << std::endl << "Invalid instrument.";
-        return 1;
-    }
     
     // exponential decay constants for the attack and decay on each note
-    double initAttack = 0;
-    double endDecay = 0;
+    double initAttack = 0.001;
+    double endDecay = 0.001;
     if (instrument == "trumpet") {
         initAttack = 0.001;
         endDecay = 0.0005;
     } else if (instrument == "toypiano") {
         initAttack = 0.008;
-        endDecay = 0.001;
-    } else if (instrument == "sine") {
-        initAttack = 0.001;
         endDecay = 0.001;
     }
     
@@ -63,7 +56,10 @@ int main() {
             linecount += 1;
         }
     }
-    else return 1;  // exit, error
+    else {
+        std::cout<< "Unable to open file.";
+        return 1;  // exit, error
+    }
     
     double* freq = new double[linecount];
     musicFile.clear();             // clear eof flag we reached when counting
@@ -97,20 +93,19 @@ int main() {
                 decay = 1 - pow(1-endDecay, nSamples-double(k));
             } else decay = 1;
             
-            // superimposes the main tone and its higher and lower harmonics (if applicable)
+            // base tone
             waveform[i*nSamples+k] = 0;
-            double currfreq = freq[i];
+            waveform[currpos] = decay*amp*sin(2*pi*freq[i]*(currpos*dt));
+            
             if (instrument == "trumpet"){
-                for (int j = 1; j < 30; j++) {
+                for (int j = 1; j < 30; j++) { // higher harmonics create saw wave
                     waveform[currpos] += decay*amp/(j)*sin(2*pi*freq[i]*j*(currpos*dt));
                 }
             } else if (instrument == "toypiano") {
                 for (int j = 1; j < 15; j++) {
                     waveform[currpos] += decay*amp/(j*j)*sin(2*pi*freq[i]*j*(currpos*dt));
                 }
-                waveform[currpos] += decay*amp/8*sin(2*pi*currfreq*(currpos*dt));
-            } else if (instrument == "sine") {
-                waveform[currpos] = decay*amp*sin(2*pi*freq[i]*(currpos*dt));
+                waveform[currpos] += decay*amp/8*sin(2*pi*freq[i]*(currpos*dt));
             }
         }
     }
