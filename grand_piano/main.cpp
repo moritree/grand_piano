@@ -18,7 +18,7 @@ int main() {
     double duration = 0.2;   // duration of tone (s)
     double amp = 5000;       // amplitude of tone
     
-    int nSamples = duration*samplerate;  // number of samples within the duration
+    int nSamples = (int)(duration*samplerate);  // number of samples within the duration
     double dt = 1/double(samplerate);    // timestep between samples
     double pi = M_PI;
     
@@ -95,17 +95,17 @@ int main() {
             
             // base tone
             waveform[i*nSamples+k] = 0;
-            waveform[currpos] = decay*amp*sin(2*pi*freq[i]*(currpos*dt));
+            waveform[currpos] = (int)(decay*amp*sin(2*pi*freq[i]*(currpos*dt)));
             
             if (instrument == "trumpet"){
                 for (int j = 1; j < 30; j++) { // higher harmonics create saw wave
-                    waveform[currpos] += decay*amp/(j)*sin(2*pi*freq[i]*j*(currpos*dt));
+                    waveform[currpos] += (int)(decay*amp/(j)*sin(2*pi*freq[i]*j*(currpos*dt)));
                 }
             } else if (instrument == "toypiano") {
                 for (int j = 1; j < 15; j++) {
-                    waveform[currpos] += decay*amp/(j*j)*sin(2*pi*freq[i]*j*(currpos*dt));
+                    waveform[currpos] += (int)(decay*amp/(j*j)*sin(2*pi*freq[i]*j*(currpos*dt)));
                 }
-                waveform[currpos] += decay*amp/8*sin(2*pi*freq[i]*(currpos*dt));
+                waveform[currpos] += (int)(decay*amp/8*sin(2*pi*freq[i]*(currpos*dt)));
             }
         }
     }
