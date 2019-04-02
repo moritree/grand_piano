@@ -3,7 +3,7 @@
 // zuni.zkep@gmail.com
 //
 // Takes a list of frequencies within a .txt and converts to a .wav song
-// 14.03.18
+// 14.03.19
 
 #include <iostream>
 #include <stdio.h>
